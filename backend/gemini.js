@@ -5,11 +5,11 @@ configDotenv();
 
 const ai = new GoogleGenAI({});
 
-export default async ({ prompt, settings }) => {
+export default async ({ thinking, prompt, settings }) => {
     if (!prompt) throw new Error("Error: prompt cannot be null.");
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-pro",
+        model: thinking ? "gemini-2.5-pro" : "gemini-2.5-flash-lite",
         contents: prompt,
         config: settings
     });
