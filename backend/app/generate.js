@@ -38,7 +38,6 @@ export async function generateThemes() {
         settings: promptThemes.SETTINGS
     });
     
-    console.log(output);
     return output
 }
 
