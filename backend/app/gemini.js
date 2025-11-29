@@ -17,7 +17,7 @@ export default async ({  prompt, settings }) => {
             model: "gemini-2.5-flash",
             contents: prompt,
             config: {
-                ...settings,
+                safetySettings: settings,
                 thinkingConfig: {
                     thinkingBudget: 0
                 }

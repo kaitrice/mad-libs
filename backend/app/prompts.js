@@ -41,8 +41,7 @@ Structure:
     }
 }
 
-`,
-    SETTINGS: ``
+`
     }
 }
 
@@ -63,6 +62,28 @@ Give me a simple list of themes ideas. This list should no have bullets or numbe
 Output:
 <Theme idea 1>
 <Theme idea 2>
-`,
-    SETTINGS: ``
+`
+}
+
+/** SAFETY */
+export const safetySettings = (age) => {
+    const BLOCK = age < 18 ? "BLOCK_LOW_AND_ABOVE" : "BLOCK_LOW_AND_ABOVE";
+    return [
+        {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: BLOCK
+        },
+        {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: BLOCK
+        },
+        {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: BLOCK
+        },
+        {
+            category: "HARM_CATEGORY_HATE_SPEECH",
+            threshold: BLOCK
+        }
+    ]
 }
