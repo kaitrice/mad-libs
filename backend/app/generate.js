@@ -1,14 +1,16 @@
 import gemini from './gemini.js'
 
 /** PROMPTS */
-const promptTheme = {
-    PROMPT: `
-Explain how AI works in a few words
+const promptStory = (theme) => {
+    return {
+        PROMPT: `
+Generate a short story using ${theme}
 `,
     SETTINGS: ``
+    }
 }
 
-const promptStory = {
+const promptThemes = {
     PROMPT: `
 Explain how AI works in a few words
 `,
@@ -16,23 +18,26 @@ Explain how AI works in a few words
 }
 
 /** use prompts */
-export async function generateTheme() {
-    const themeOutput = await gemini({
-        prompt: promptTheme.PROMPT, 
-        settings: promptTheme.SETTINGS
+export async function generateThemes() {
+    const output = await gemini({
+        prompt: promptThemes.PROMPT, 
+        settings: promptThemes.SETTINGS
     });
     
-    console.log(themeOutput);
-    return themeOutput
+    console.log(output);
+    return output
 }
 
-export async function generateStory() {
-    const storyOutput = await gemini({
+export async function generateStory(theme) {
+    if (!theme) theme = "First day of work."
+    const prompt = promptStory(theme)
+
+    const output = await gemini({
         thinking: true,
-        prompt: promptStory.PROMPT, 
-        settings: promptStory.SETTINGS
+        prompt: prompt.PROMPT, 
+        settings: prompt.SETTINGS
     });
 
-    console.log(storyOutput);
-    return storyOutput
+    console.log(output);
+    return output
 }

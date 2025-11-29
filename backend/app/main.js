@@ -1,7 +1,8 @@
-import { generateStory, generateTheme } from "./generate.js";
+import { generateStory, generateThemes } from "./generate.js";
 
 async function main() {
-    await generateTheme()    
+    await generateThemes();
+    await generateStory();
 }
 
 await main();
