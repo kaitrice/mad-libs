@@ -42,7 +42,6 @@ export async function generateThemes() {
 }
 
 export async function generateStory(theme) {
-    if (!theme) theme = "First day of work."
     const prompt = promptStory(theme)
 
     const output = await gemini({
@@ -50,10 +49,6 @@ export async function generateStory(theme) {
         prompt: prompt.PROMPT, 
         settings: prompt.SETTINGS
     });
-
-    for await (const chunk of output) {
-        console.log(chunk.text);
-    }
 
     return output
 }

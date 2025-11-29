@@ -1,7 +1,8 @@
-import { getThemes } from "./game.js";
+import { getStory, getThemes } from "./game.js";
 
 async function main() {
-    await getThemes()
+    // await getThemes()
+    await getStory()
 }
 
 await main();
