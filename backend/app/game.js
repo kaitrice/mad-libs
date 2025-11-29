@@ -1,4 +1,4 @@
-import gemini from './app/gemini.js'
+import gemini from './gemini.js'
 
 /** PROMPTS */
 const promptTheme = {

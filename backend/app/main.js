@@ -1,4 +1,4 @@
-import { generateStory, generateTheme } from "../game.js";
+import { generateStory, generateTheme } from "./game.js";
 
 async function main() {
     await generateTheme()    
