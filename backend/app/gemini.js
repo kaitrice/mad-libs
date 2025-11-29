@@ -5,7 +5,7 @@ configDotenv();
 
 const ai = new GoogleGenAI({});
 
-export default async ({ thinking, prompt, settings }) => {
+export default async ({  prompt, settings }) => {
     if (!prompt?.trim()) throw new Error(
         "Error: prompt cannot be null."
     );
@@ -19,7 +19,7 @@ export default async ({ thinking, prompt, settings }) => {
             config: {
                 ...settings,
                 thinkingConfig: {
-                    thinkingBudget: thinking ? -1 : 0
+                    thinkingBudget: 0
                 }
             }
         });
