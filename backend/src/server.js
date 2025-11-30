@@ -12,9 +12,13 @@ const FILE_PATH = getPath("../pages/index.html");
 APP.use(express.static(FOLDER_PATH));
 APP.use(express.json());
 
-
 APP.get('/', (req, res) => {
   res.sendFile(FILE_PATH);
+});
+
+APP.use('/api', (req, res, next) => {
+  console.time(`    Request recieved: ${req.method} ${req.url}`);
+  next();
 });
 
 APP.use('/api', routes);
