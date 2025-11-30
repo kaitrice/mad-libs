@@ -30,17 +30,16 @@ After creating the story:
 Return story with key words removed and list of key word types in the order they are in the story.
 Structure:
 {
-    story: [
-        'The [adjective] smell of fresh paint still clung to the air in the new office, a smell that did little to calm Elara's buzzing nerves. This was it. Her first day at Solara Tech, her dream job as a [job title]. She clutched the strap of her oversized, slightly scuffed laptop bag, feeling like an imposter in a sea of sleek, confident professionals.',
-        'She'd rehearsed her introduction a dozen times in front of her [place] mirror, but now, faced with an actual bustling open-plan office, the words felt like lead in her throat. Her new manager, a perpetually cheerful woman named Anya, waved her over to a desk in the corner. It was surprisingly neat, a shiny new [office supply] sitting expectantly.',
-    ],
-    words: [
-        adjective,
-        job title,
-        office supply
-    ]
+story: [
+    "The [adjective] smell of fresh paint still clung to the air in the new office, a smell that did little to calm Elara's buzzing nerves. This was it. Her first day at Solara Tech, her dream job as a [job title]. She clutched the strap of her oversized, slightly scuffed laptop bag, feeling like an imposter in a sea of sleek, confident professionals.",
+    "She'd rehearsed her introduction a dozen times in front of her [place] mirror, but now, faced with an actual bustling open-plan office, the words felt like lead in her throat. Her new manager, a perpetually cheerful woman named Anya, waved her over to a desk in the corner. It was surprisingly neat, a shiny new [office supply] sitting expectantly.",
+],
+words: [
+    adjective,
+    job title,
+    office supply,
+]
 }
-
 `
     }
 }
@@ -58,15 +57,15 @@ You are creating themes for a Mad Libs game.
 2. Generate 6 themes.
 
 # Output
-Give me a simple list of themes ideas. This list should no have bullets or numbers, just a simple list separated by new lines.
+Give me a simple list of themes ideas. This list should not have numbers or bullets.
 Output:
 [
-    <Theme idea 1>,
-    <Theme idea 2>,
-    <Theme idea 3>,
-    <Theme idea 4>,
-    <Theme idea 5>,
-    <Theme idea 6>,
+<Theme idea 1>,
+<Theme idea 2>,
+<Theme idea 3>,
+<Theme idea 4>,
+<Theme idea 5>,
+<Theme idea 6>,
 ]
 `
 }
