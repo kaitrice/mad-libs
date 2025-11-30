@@ -72,7 +72,7 @@ Output:
 
 /** SAFETY */
 export const safetySettings = (age) => {
-    const BLOCK = age < 18 ? "BLOCK_LOW_AND_ABOVE" : "BLOCK_LOW_AND_ABOVE";
+    const BLOCK = age < 18 ? "BLOCK_LOW_AND_ABOVE" : "BLOCK_MEDIUM_AND_ABOVE";
     return [
         {
             category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
