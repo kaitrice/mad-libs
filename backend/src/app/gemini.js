@@ -1,42 +1,65 @@
 import { GoogleGenAI } from "@google/genai";
 import { configDotenv } from "dotenv";
+import { addCandidateTokens, availablePromptTokens, canUseLLM } from "./lib.js";
 
 configDotenv();
 
 const ai = new GoogleGenAI({});
 
-export default async ({  prompt, settings }) => {
+async function checkTokens(params) {
+    const countTokensResponse = await ai.models.countTokens(params);
+    const countPrompt = countTokensResponse.totalTokens;
+    if (!availablePromptTokens(countPrompt)) throw new Error(
+        "No tokens available."
+    );
+}
+
+function validatePrompt(prompt, settings) {
     if (!prompt?.trim()) throw new Error(
-        "Error: prompt cannot be null."
+        "Prompt cannot be null."
     );
 
-    const start = performance.now();
+    if (!canUseLLM()) throw new Error(
+        "No requests available."
+    );
 
+    return {
+        model: "gemini-2.5-flash",
+        contents: prompt,
+        config: {
+            safetySettings: settings,
+            thinkingConfig: {
+                thinkingBudget: 0
+            },
+            responseMimeType: "application/json"
+        }
+    };
+}
+
+function validateResponse(response) {
+    if (!response || 
+        !response.text || 
+        !response.usageMetadata || 
+        !response.usageMetadata.candidatesTokenCount
+    ) throw new Error(
+        "Invalid response."
+    );
+    addCandidateTokens(response.usageMetadata.candidatesTokenCount);
+    return response.text;
+}
+
+export default async ({ prompt, settings }) => {
+    let start;
     try {
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: {
-                safetySettings: settings,
-                thinkingConfig: {
-                    thinkingBudget: 0
-                },
-                responseMimeType: "application/json"
-            }
-        });
+        const params = validatePrompt(prompt, settings);
 
-        if (!response || !response.text) throw new Error(
-            "API returned an invalid or empty response."
-        );
+        start = performance.now();
 
-        console.log(response.usageMetadata);
+        await checkTokens(params);
+        const response = await ai.models.generateContent(params);
+        const text = validateResponse(response)
 
-        const text = response.text;
-
-        return {
-            tokens: 0,
-            output: JSON.parse(text)
-        };
+        return JSON.parse(text);
     } catch (error) {
         console.error("Gemini API Error:", error);
         throw error;

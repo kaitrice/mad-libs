@@ -1,28 +1,37 @@
 const WINDOW = 60000;
+const REQUEST_LIMIT = 10;
+const TOKEN_LIMIT = 200000;
+
 let request_bucket = [];
 let prompt_bucket = [];
+let candidate_bucket = [];
 
-export function canUseLLM(limit = 10) {
-    if (!availableTokens()) return false;
-
+export function canUseLLM() {
     const now = Date.now();
     request_bucket = request_bucket.filter(timestamp => now - timestamp < WINDOW);
+    candidate_bucket = candidate_bucket.filter(val => now - val.timestamp < WINDOW);
 
-    if (request_bucket.length >= limit) return false;
+    if (request_bucket.length >= REQUEST_LIMIT || candidate_bucket.length >= TOKEN_LIMIT) return false;
 
     request_bucket.push(now);
     return true;
 }
 
-function availableTokens(limit = 200000) {
+export function availablePromptTokens(usedPrompt) {
     const now = Date.now();
     prompt_bucket = prompt_bucket.filter(val => now - val.timestamp < WINDOW);
-    const used = prompt_bucket.reduce((sum, val) => sum + val.tokens, 0);
+    const totalPrompt = prompt_bucket.reduce((sum, val) => sum + val.tokens, 0);
+
+    if (totalPrompt + usedPrompt > TOKEN_LIMIT) return false;
     
-    return used < limit;
+    prompt_bucket.push({ timestamp: now, tokens: usedPrompt });
+    console.log("PROMPTS: ", prompt_bucket);
+    return true;
 }
 
-export function updateTokens(usedTokens) {
+export function addCandidateTokens(usedCandidate) {
     const now = Date.now();
-    prompt_bucket.push({ timestamp: now, tokens: usedTokens })
+    candidate_bucket.push({ timestamp: now, tokens: usedCandidate });
+    console.log("CANDIDATE: ", candidate_bucket);
+    return true;
 }
