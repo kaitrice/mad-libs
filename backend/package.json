@@ -17,6 +17,7 @@
     "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
     "node": "^22.21.1",
+    "path": "^0.12.7",
     "zod": "^4.1.13"
   },
   "main": "src/server.js"
