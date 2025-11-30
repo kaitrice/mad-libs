@@ -1,17 +1,16 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Interacting with Gemini API to generate of a Mad Libs story template and theme ideas.",
-  "license": "MIT",
-  "author": "Kaitlyn Rice",
-  "type": "module",
-  "main": "app/main.js",
+  "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app/main.js"
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@azure/functions": "^4.0.0",
     "@google/genai": "^1.30.0",
-    "dotenv": "^17.2.3"
-  }
+    "dotenv": "^17.2.3",
+    "node": "^22.21.1"
+  },
+  "main": "src/{index.js,functions/*.js}"
 }
