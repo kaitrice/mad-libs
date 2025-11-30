@@ -5,7 +5,7 @@ import { canUseLLM } from '../app/lib.js';
 app.http('themes', {
     methods: ['GET'],
     authLevel: 'function',
-    handler: async (request) => {
+    handler: async (request, context) => {
         if (!canUseLLM()) {
             context.log("High volume Alert! Theme generation blocked.")
             return {
@@ -16,10 +16,8 @@ app.http('themes', {
 
         const age = request.query.get('age');
 
-        const response = await getThemes(age);
-
-        updateTokens(response.tokens);
+        const themes = await getThemes(age);
         
-        return { jsonBody: response.themes };
+        return { jsonBody: themes };
     }
 });

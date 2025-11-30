@@ -1,6 +1,6 @@
 const WINDOW = 60000;
-const request_bucket = [];
-const tokens_bucket = [];
+let request_bucket = [];
+let prompt_bucket = [];
 
 export function canUseLLM(limit = 10) {
     if (!availableTokens()) return false;
@@ -16,13 +16,13 @@ export function canUseLLM(limit = 10) {
 
 function availableTokens(limit = 200000) {
     const now = Date.now();
-    tokens_bucket = tokens_bucket.filter(val => now - val.timestamp < WINDOW);
-    const used = tokens_bucket.reduce((sum, val) => sum + val.tokens, 0);
+    prompt_bucket = prompt_bucket.filter(val => now - val.timestamp < WINDOW);
+    const used = prompt_bucket.reduce((sum, val) => sum + val.tokens, 0);
     
-    return used > limit;
+    return used < limit;
 }
 
 export function updateTokens(usedTokens) {
     const now = Date.now();
-    tokens_bucket.push({ timestamp: now, tokens: usedTokens })
+    prompt_bucket.push({ timestamp: now, tokens: usedTokens })
 }

@@ -29,9 +29,14 @@ export default async ({  prompt, settings }) => {
             "API returned an invalid or empty response."
         );
 
+        console.log(response.usageMetadata);
+
         const text = response.text;
 
-        return JSON.parse(text);
+        return {
+            tokens: 0,
+            output: JSON.parse(text)
+        };
     } catch (error) {
         console.error("Gemini API Error:", error);
         throw error;

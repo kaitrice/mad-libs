@@ -1,6 +1,6 @@
 import { app } from '@azure/functions';
 import { getStory } from '../app/game.js';
-import { canUseLLM, updateTokens } from '../app/lib.js';
+import { canUseLLM } from '../app/lib.js';
 
 app.http('story', {
     methods: ['GET'],
@@ -17,10 +17,8 @@ app.http('story', {
         const age = request.query.get('age');
         const theme = request.query.get('theme');
 
-        const response = await getStory({ theme: theme, age: age });
+        const output = await getStory({ theme: theme, age: age });
 
-        updateTokens(response.tokens);
-
-        return { jsonBody: response.output };
+        return { jsonBody: output };
     }
 });
