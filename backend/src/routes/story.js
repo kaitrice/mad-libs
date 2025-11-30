@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { getStory } from "../services/storyService.js";
 
-const router = Router()
+const router = Router();
+
+export default router;
 
 // app.http('story', {
 //     methods: ['GET'],

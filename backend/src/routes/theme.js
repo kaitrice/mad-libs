@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { getThemes } from "../services/themeService.js";
-const router = Router()
 
+const router = Router();
+
+export default router;
 
 // app.http('themes', {
 //     methods: ['GET'],

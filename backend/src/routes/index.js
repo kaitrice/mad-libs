@@ -1,13 +1,12 @@
-import { Router } from "express";
-import { getPath } from "../utils/getPath.js";
-import * as storyEndpoint from './story.js';
-import * as themeEndpoint from './theme.js';
+import { Router } from 'express';
+import documentation from './documentation.js';
+import story from './story.js';
+import theme from './theme.js';
 
-const filePath = getPath('documentation/index.html');
-const router = Router()
+const router = Router();
 
-router.get('/', (req, res) => {
-  res.sendFile(filePath);
-});
+router.use('/', documentation);
+router.use('/story', story);
+router.use('/theme', theme);
 
 export default router;
