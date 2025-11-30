@@ -5,9 +5,11 @@ import { getPath } from './utils/getPath.js';
 
 const PORT = process.env.PORT || 7170;
 const APP = express();
-const FILE_PATH = getPath('index.html');
 
+APP.use(express.static('pages'));
 APP.use(express.json());
+
+const FILE_PATH = getPath('index.html');
 
 APP.get('/', (req, res) => {
   res.sendFile(FILE_PATH);
