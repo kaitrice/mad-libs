@@ -1,5 +1,4 @@
-import { app } from '@azure/functions';
-import { getStory } from '../app/game.js';
+import { getStory } from '../game.js';
 
 app.http('story', {
     methods: ['GET'],

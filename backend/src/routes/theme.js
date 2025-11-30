@@ -1,5 +1,4 @@
-import { app } from '@azure/functions';
-import { getThemes } from '../app/game.js';
+import { getThemes } from '../game.js';
 
 app.http('themes', {
     methods: ['GET'],

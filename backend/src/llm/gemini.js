@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { configDotenv } from "dotenv";
-import { addCandidateTokens, availablePromptTokens, canUseLLM } from "./lib.js";
+import { addCandidateTokens, availablePromptTokens, canUseLLM } from "./buckets";
 
 configDotenv();
 
