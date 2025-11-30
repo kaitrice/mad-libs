@@ -84,11 +84,11 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const theme = document.querySelector('input[name="theme"]:checked').value;
     try {
-        const output = await fetchData(`story?${theme}`);
+        const output = await fetchData(`story?theme=${encodeURIComponent(theme)}`);
         
         sessionStorage.setItem("theme", theme);
-        sessionStorage.setItem("story", output.story);
-        sessionStorage.setItem("words", output.words);
+        sessionStorage.setItem("story", JSON.stringify(output.story));
+        sessionStorage.setItem("words", JSON.stringify(output.words));
     
         window.location.href = "story.html";
     } catch (error) {
