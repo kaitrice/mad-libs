@@ -7,6 +7,6 @@ const router = Router();
 
 router.use('/', documentation);
 router.use('/story', story);
-router.use('/theme', theme);
+router.use('/themes', theme);
 
 export default router;
