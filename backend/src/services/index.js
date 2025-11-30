@@ -1,4 +1,4 @@
 import * as storyService from './storyService.js';
 import * as themeService from './themeService.js';
 
-export default { storyService, themeService };
+export { storyService, themeService };

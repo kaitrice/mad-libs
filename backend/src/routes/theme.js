@@ -1,26 +1,22 @@
 import { Router } from "express";
-import { getThemes } from "../services/themeService.js";
+import { themeService } from "../services/index.js";
 
 const router = Router();
 
-export default router;
+router.get('/', async (request, response) => {
+    const { age } = request.query;
+    try {
+        const output = await themeService(age);
+        res.send(output);
+    } catch (error) {
+        console.warn("Alert: High volume! Story generation blocked.");
+        response
+            .status(503)
+            .json({
+                status: 503,
+                message: "Experiencing high volumes. Try again later."
+            });
+    }
+});
 
-// app.http('themes', {
-//     methods: ['GET'],
-//     authLevel: 'function',
-//     handler: async (request, context) => {
-//         const age = request.query.get('age');
-        
-//         try {
-//             const themes = await getThemes(age);
-            
-//             return { jsonBody: themes };
-//         } catch (error) {
-//             context.warn("Alert: High volume! Theme generation blocked.");
-//             return {
-//                 status: 503,
-//                 body: "Experiencing high volumes. Try again later."
-//             }
-//         }
-//     }
-// });
+export default router;
