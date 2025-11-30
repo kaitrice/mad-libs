@@ -1,15 +1,16 @@
-import { TOKEN_LIMIT } from "./index.js";
+import { TOKEN_LIMIT, WINDOW } from "./index.js";
 
 let prompt_bucket = [];
 
-export function availablePromptTokens(usedPrompt) {
+export function addPromptTokens(usedPrompts) {
     const now = Date.now();
-    prompt_bucket = prompt_bucket.filter(val => now - val.timestamp < WINDOW);
-    const totalPrompt = prompt_bucket.reduce((sum, val) => sum + val.tokens, 0);
+    prompt_bucket.push({ timestamp: now, tokens: usedPrompts });
+}
 
-    if (totalPrompt + usedPrompt > TOKEN_LIMIT) return false;
-    
-    prompt_bucket.push({ timestamp: now, tokens: usedPrompt });
-    console.log("PROMPTS: ", prompt_bucket);
+export function availablePromptTokens(usedPrompts) {
+    prompt_bucket = prompt_bucket.filter(timestamp => now - timestamp < WINDOW);
+    const totalTokens = prompt_bucket.reduce((sum, val) => sum + val.tokens, 0);
+    if (totalTokens + usedPrompts >= TOKEN_LIMIT) return false;
+    addPromptTokens(usedPrompts);
     return true;
 }

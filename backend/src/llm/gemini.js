@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { configDotenv } from "dotenv";
-import { addCandidateTokens, availablePromptTokens, canUseLLM } from "./buckets/index.js";
+import { candidateBucket, canUseLLM, promptBucket } from "./buckets/index.js";
 
 configDotenv();
 
@@ -9,7 +9,7 @@ const ai = new GoogleGenAI({});
 async function checkTokens(params) {
     const countTokensResponse = await ai.models.countTokens(params);
     const countPrompt = countTokensResponse.totalTokens;
-    if (!availablePromptTokens(countPrompt)) throw new Error(
+    if (!promptBucket.availablePromptTokens(countPrompt)) throw new Error(
         "No tokens available."
     );
 }
@@ -44,7 +44,8 @@ function validateResponse(response) {
     ) throw new Error(
         "Invalid response."
     );
-    addCandidateTokens(response.usageMetadata.candidatesTokenCount);
+    const countCandidate = response.usageMetadata.candidatesTokenCount;
+    candidateBucket.addCandidateTokens(countCandidate);
     return response.text;
 }
 
@@ -53,7 +54,7 @@ export default async ({ prompt, settings }) => {
     try {
         const params = validatePrompt(prompt, settings);
 
-        start = performance.now();
+        console.time();
 
         await checkTokens(params);
         const response = await ai.models.generateContent(params);
@@ -64,7 +65,7 @@ export default async ({ prompt, settings }) => {
         console.error("Gemini API Error:", error);
         throw error;
     } finally {
-        const end = performance.now();
-        console.log(`Gemini completed task in ${((end - start) / 1000).toFixed(2)} s`);
+        console.timeEnd("Gemini task completed");
+        // console.log(`Gemini completed task in ${((end - start) / 1000).toFixed(2)} s`);
     }
 }

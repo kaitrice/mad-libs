@@ -1,16 +1,15 @@
-import { WINDOW } from "./index.js";
-import { availableCandidateTokens } from "./promptCandidate.js";
+import { REQUEST_LIMIT, WINDOW } from "./index.js";
 
 let request_bucket = [];
 
-export function canUseLLM() {
+export function addRequestToken() {
     const now = Date.now();
-    request_bucket = request_bucket.filter(timestamp => now - timestamp < WINDOW);
-    candidate_bucket = candidate_bucket.filter(val => now - val.timestamp < WINDOW);
-    
-
-    if (request_bucket.length >= REQUEST_LIMIT || availableCandidateTokens()) return false;
-
     request_bucket.push(now);
+}
+
+export function availableRequestTokens() {
+    request_bucket = request_bucket.filter(timestamp => now - timestamp < WINDOW);
+    if (request_bucket.length >= REQUEST_LIMIT) return false;
+    addRequestToken();
     return true;
 }
