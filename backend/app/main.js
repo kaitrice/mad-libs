@@ -1,8 +1,10 @@
 import { getStory, getThemes } from "./game.js";
 
 async function main() {
-    // await getThemes()
-    await getStory()
+    const themes = await getThemes();
+    const { story, words } = await getStory({theme: themes[0]});
+    console.log(story);
+    console.log(words);
 }
 
 await main();
