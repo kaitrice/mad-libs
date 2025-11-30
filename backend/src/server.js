@@ -6,10 +6,12 @@ import { getPath } from './utils/getPath.js';
 const PORT = process.env.PORT || 7170;
 const APP = express();
 
-APP.use(express.static('pages'));
+const FOLDER_PATH = getPath("../public");
+const FILE_PATH = getPath("../pages/index.html");
+
+APP.use(express.static(FOLDER_PATH));
 APP.use(express.json());
 
-const FILE_PATH = getPath('index.html');
 
 APP.get('/', (req, res) => {
   res.sendFile(FILE_PATH);
