@@ -1,4 +1,4 @@
-import { TOKEN_LIMIT } from ".";
+import { TOKEN_LIMIT } from "./index.js";
 
 let candidate_bucket = [];
 

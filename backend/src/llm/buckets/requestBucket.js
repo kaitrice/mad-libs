@@ -1,5 +1,5 @@
-import { WINDOW } from ".";
-import { availableCandidateTokens } from "./promptCandidate";
+import { WINDOW } from "./index.js";
+import { availableCandidateTokens } from "./promptCandidate.js";
 
 let request_bucket = [];
 

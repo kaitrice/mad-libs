@@ -1,2 +1,4 @@
-export * from './themeService.js';
-export * from './storyService.js';
+import * as storyService from './storyService.js';
+import * as themeService from './themeService.js';
+
+export default { storyService, themeService };

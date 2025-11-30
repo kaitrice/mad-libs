@@ -1,5 +1,4 @@
-import { app } from '@azure/functions';
+import * as storyEndpoint from './story.js';
+import * as themeEndpoint from './theme.js';
 
-app.setup({
-    enableHttpStream: true,
-});
+export default { storyEndpoint, themeEndpoint };

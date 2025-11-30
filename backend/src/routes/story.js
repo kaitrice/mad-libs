@@ -1,4 +1,5 @@
-import { getStory } from '../game.js';
+import app from "../server.js";
+import { getStory } from "../services/storyService.js";
 
 app.http('story', {
     methods: ['GET'],

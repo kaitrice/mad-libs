@@ -1,4 +1,5 @@
-import { getThemes } from '../game.js';
+import app from "../server.js";
+import { getThemes } from "../services/themeService.js";
 
 app.http('themes', {
     methods: ['GET'],
