@@ -19,7 +19,7 @@ function validatePrompt(prompt, settings) {
         "Prompt cannot be null."
     );
 
-    if (!canUseLLM()) throw new Error(
+    if (!canUseLLM) throw new Error(
         "No requests available."
     );
 
