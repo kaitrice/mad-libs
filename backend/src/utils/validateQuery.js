@@ -1,22 +1,36 @@
-import zod from 'zod';
+import { storySchema, themeSchema } from '../models/index.js';
+
+function isValidAge(age) {
+    /**
+     * integer only
+     * check age range
+     */
+    return true;
+}
+
+function isValidTheme(theme) {
+    /**
+     * trim white space
+     * check for special characters (i.e coding syntax and patterns)
+     */
+    return true;
+}
 
 export function validateStory(query) {
-    const expected = zod.object({
-        age: zod.number().optional(),
-        theme: zod.string().optional(),
-    })
-    const result = query.safeParse(expected);
+    const result = query.safeParse(storySchema);
 
-    if (!result.success) result.error; 
-    else result.data;
+    if (!result.success) result.error;
+    if (result.age && !isValidAge(result.age)) result.error;
+    if (result.theme && !isValidTheme(result.theme)) result.error;
+
+    return result.data;
 }
 
 export function validateTheme(query) {
-    const expected = zod.object({
-        age: zod.number().optional()
-    })
-    const result = query.safeParse(expected);
+    const result = query.safeParse(storySchema);
 
-    if (!result.success) result.error; 
-    else result.data;
+    if (!result.success) result.error;
+    if (result.age && !isValidAge(result.age)) result.error;
+
+    return result.data;
 }
