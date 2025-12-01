@@ -2,8 +2,8 @@ import zod from 'zod';
 
 export function validateStory(query) {
     const expected = zod.object({
-        age: zod.number(),
-        theme: zod.string(),
+        age: zod.number().optional(),
+        theme: zod.string().optional(),
     })
     const result = query.safeParse(expected);
 
@@ -13,7 +13,7 @@ export function validateStory(query) {
 
 export function validateTheme(query) {
     const expected = zod.object({
-        age: zod.number()
+        age: zod.number().optional()
     })
     const result = query.safeParse(expected);
 
