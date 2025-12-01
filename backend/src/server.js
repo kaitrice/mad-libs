@@ -1,11 +1,12 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import routes from "./routes/index.js";
 import { configDotenv } from 'dotenv';
 import { getPath } from './utils/getPath.js';
 import { corsOptions, rateLimit } from './config/index.js';
 
-configDotenv()
+configDotenv();
 
 const PORT = process.env.PORT || 7170;
 const APP = express();
@@ -15,6 +16,7 @@ const FILE_PATH = getPath("../pages/index.html");
 
 APP.use(cors(corsOptions));
 APP.use(rateLimit);
+APP.use(helmet());
 APP.use(express.json());
 APP.use(express.static(FOLDER_PATH));
 
