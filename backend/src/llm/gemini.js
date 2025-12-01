@@ -1,8 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { configDotenv } from "dotenv";
 import { candidateBucket, canUseLLM, promptBucket } from "./buckets/index.js";
-
-configDotenv();
 
 const ai = new GoogleGenAI({});
 
