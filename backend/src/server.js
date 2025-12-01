@@ -1,12 +1,15 @@
 import express from 'express';
+import cors from 'cors';
 import routes from "./routes/index.js";
 import { configDotenv } from 'dotenv';
 import { getPath } from './utils/getPath.js';
+import { corsOptions } from './config/cors.js';
 
 configDotenv()
 
 const PORT = process.env.PORT || 7170;
 const APP = express();
+APP.use(cors(corsOptions));
 
 const FOLDER_PATH = getPath("../public");
 const FILE_PATH = getPath("../pages/index.html");
