@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { themeService } from "../services/index.js";
+import { validateTheme } from "../utils/validateQuery.js";
 
 const router = Router();
 
