@@ -50,11 +50,10 @@ function validateResponse(response) {
 }
 
 export default async ({ prompt, settings }) => {
-    let start;
     try {
         const params = validatePrompt(prompt, settings);
 
-        console.time();
+        console.time("Gemini task");
 
         await checkTokens(params);
         const response = await ai.models.generateContent(params);
@@ -65,7 +64,7 @@ export default async ({ prompt, settings }) => {
         console.error("Gemini API Error:", error);
         throw error;
     } finally {
-        console.timeEnd("Gemini task completed");
+        console.timeEnd("Gemini task");
         // console.log(`Gemini completed task in ${((end - start) / 1000).toFixed(2)} s`);
     }
 }

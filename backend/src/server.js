@@ -17,7 +17,7 @@ APP.get('/', (req, res) => {
 });
 
 APP.use('/api', (req, res, next) => {
-  console.time(`    Request recieved: ${req.method} ${req.url}`);
+  console.log(`    Request recieved: ${req.method} ${req.url}`);
   next();
 });
 
