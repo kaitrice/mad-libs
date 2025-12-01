@@ -8,6 +8,7 @@ export function addPromptTokens(usedPrompts) {
 }
 
 export function availablePromptTokens(usedPrompts) {
+    const now = Date.now();
     prompt_bucket = prompt_bucket.filter(timestamp => now - timestamp < WINDOW);
     const totalTokens = prompt_bucket.reduce((sum, val) => sum + val.tokens, 0);
     if (totalTokens + usedPrompts >= TOKEN_LIMIT) return false;

@@ -8,6 +8,7 @@ export function addCandidateTokens(usedCandidate) {
 }
 
 export function availableCandidateTokens() {
+    const now = Date.now();
     candidate_bucket = candidate_bucket.filter(timestamp => now - timestamp < WINDOW);
     const totalTokens = candidate_bucket.reduce((sum, val) => sum + val.tokens, 0);
     return totalTokens < TOKEN_LIMIT;

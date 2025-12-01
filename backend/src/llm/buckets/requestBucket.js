@@ -8,6 +8,7 @@ export function addRequestToken() {
 }
 
 export function availableRequestTokens() {
+    const now = Date.now();
     request_bucket = request_bucket.filter(timestamp => now - timestamp < WINDOW);
     if (request_bucket.length >= REQUEST_LIMIT) return false;
     addRequestToken();
