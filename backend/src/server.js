@@ -1,7 +1,9 @@
-import '../config/index.js';
 import express from 'express';
 import routes from "./routes/index.js";
+import { configDotenv } from 'dotenv';
 import { getPath } from './utils/getPath.js';
+
+configDotenv()
 
 const PORT = process.env.PORT || 7170;
 const APP = express();
