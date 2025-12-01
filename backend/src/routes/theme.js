@@ -6,6 +6,8 @@ const router = Router();
 router.get('/', async (request, response) => {
     const { age } = request.query;
     try {
+        validateTheme(age);
+        
         const output = await themeService(age);
         response
             .status(200)

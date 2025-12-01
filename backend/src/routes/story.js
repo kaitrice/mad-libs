@@ -1,11 +1,14 @@
 import { Router } from "express";
 import { storyService } from "../services/index.js";
+import { validateStory } from "../utils/validateQuery.js";
 
 const router = Router();
 
 router.get('/', async (request, response) => {
-    const { age, theme } = request.query;
+    const query = request.query;
     try {
+        validateStory(query);
+        
         const output = await storyService({ theme: theme, age: age });
         response
             .status(200)
