@@ -7,9 +7,11 @@ router.get('/', async (request, response) => {
     const { age, theme } = request.query;
     try {
         const output = await storyService({ theme: theme, age: age });
-        res.send(output);
+        response
+            .status(200)
+            .json(output);
     } catch (error) {
-        console.warn("Alert: High volume! Story generation blocked.");
+        console.warn("Alert: High volume! Story generation blocked:", error);
         response
             .status(503)
             .json({
