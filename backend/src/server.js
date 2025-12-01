@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import routes from "./routes/index.js";
 import { configDotenv } from 'dotenv';
 import { getPath } from './utils/getPath.js';
-import { corsOptions, rateLimit } from './config/index.js';
+import { corsOptions, rateLimit } from './utils/config/index.js';
 
 configDotenv();
 
@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 7170;
 const APP = express();
 
 const FOLDER_PATH = getPath("../public");
-const FILE_PATH = getPath("../pages/index.html");
+const FILE_PATH = getPath("../public/html/index.html");
 
 APP.use(cors(corsOptions));
 APP.use(rateLimit);
