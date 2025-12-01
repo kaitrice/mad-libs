@@ -3,19 +3,20 @@ import cors from 'cors';
 import routes from "./routes/index.js";
 import { configDotenv } from 'dotenv';
 import { getPath } from './utils/getPath.js';
-import { corsOptions } from './config/cors.js';
+import { corsOptions, rateLimit } from './config/index.js';
 
 configDotenv()
 
 const PORT = process.env.PORT || 7170;
 const APP = express();
-APP.use(cors(corsOptions));
 
 const FOLDER_PATH = getPath("../public");
 const FILE_PATH = getPath("../pages/index.html");
 
-APP.use(express.static(FOLDER_PATH));
+APP.use(cors(corsOptions));
+APP.use(rateLimit);
 APP.use(express.json());
+APP.use(express.static(FOLDER_PATH));
 
 APP.get('/', (req, res) => {
   res.sendFile(FILE_PATH);
