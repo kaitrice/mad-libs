@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import documentation from './documentation.js';
-import story from './story.js';
-import theme from './theme.js';
+import docRoute from './documentation.js';
+import storyRoute from './story.js';
+import themeRoute from './theme.js';
 
 const router = Router();
 
-router.use('/', documentation);
-router.use('/story', story);
-router.use('/themes', theme);
+router.use('/', docRoute);
+router.use('/story', storyRoute);
+router.use('/themes', themeRoute);
 
 export default router;
