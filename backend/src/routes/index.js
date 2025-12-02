@@ -1,12 +1,14 @@
 import { Router } from 'express';
-import docRoute from './documentation.js';
-import storyRoute from './story.js';
-import themeRoute from './theme.js';
+import storyRoute from './story.route.js';
+import themeRoute from './theme.route.js';
 
 const router = Router();
 
-router.use('/', docRoute);
-router.use('/story', storyRoute);
-router.use('/themes', themeRoute);
+const routes = [
+    storyRoute,
+    themeRoute
+]
+
+routes.forEach(route => router.use('/', route));
 
 export default router;
