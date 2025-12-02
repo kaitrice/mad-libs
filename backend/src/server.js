@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import routes from "./routes/index.js";
 import { configDotenv } from 'dotenv';
+import routes from "./routes/index.js";
 import { getPath } from './utils/getPath.js';
 import { corsOptions, rateLimit } from './utils/config/index.js';
 
@@ -25,7 +25,7 @@ APP.get('/', (req, res) => {
 });
 
 APP.use('/api', (req, res, next) => {
-  console.log(`    Request recieved: ${req.method} ${req.url}`);
+  console.log(`Request recieved: ${req.method} ${req.url}`);
   next();
 });
 
@@ -36,5 +36,5 @@ APP.use((req, res) => {
 });
 
 APP.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}\n`);
 });

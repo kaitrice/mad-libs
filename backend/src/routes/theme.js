@@ -14,7 +14,7 @@ router.get('/', async (request, response) => {
             .status(200)
             .json(output);
     } catch (error) {
-        console.warn("Alert: High volume! Story generation blocked:", error);
+        console.error(`\nAPI Error: ${error}\n`);
         response
             .status(503)
             .json({
