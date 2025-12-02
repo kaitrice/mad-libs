@@ -1,5 +1,5 @@
-import storySchema from "./story.js";
-import themeSchema from "./theme.js";
+import storySchema from "./story.model.js";
+import themeSchema from "./theme.model.js";
 
 export {
     storySchema,
