@@ -17,7 +17,7 @@ function isValidTheme(theme) {
 }
 
 export function validateStory(query) {
-    const result = query.safeParse(storySchema);
+    const result = storySchema.safeParse(query);
 
     if (!result.success) result.error;
     if (result.age && !isValidAge(result.age)) result.error;
@@ -27,7 +27,7 @@ export function validateStory(query) {
 }
 
 export function validateTheme(query) {
-    const result = query.safeParse(storySchema);
+    const result = themeSchema.safeParse(query);
 
     if (!result.success) result.error;
     if (result.age && !isValidAge(result.age)) result.error;
