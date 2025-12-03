@@ -1,7 +1,7 @@
 import zod from 'zod';
 
-const themeSchema = zod.object({
+const themeModel = zod.object({
     age: zod.number().optional(),
 });
 
-export default themeSchema;
+export default themeModel;

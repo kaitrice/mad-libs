@@ -1,8 +1,8 @@
 import zod from 'zod';
 
-const storySchema = zod.object({
+const storyModel = zod.object({
     age: zod.number().optional(),
     theme: zod.string().optional(),
 });
 
-export default storySchema;
+export default storyModel;
