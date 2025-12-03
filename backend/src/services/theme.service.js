@@ -1,7 +1,7 @@
 import gemini from '../utils/llm/gemini.js'
 import { promptThemes, safetySettings } from '../utils/llm/prompts.js';
 
-export async function getThemes( age = 0 ) {
+export async function getThemes( age = 0, body ) {
     const SAFETY_SETTINGS = safetySettings(age)
 
     try {
