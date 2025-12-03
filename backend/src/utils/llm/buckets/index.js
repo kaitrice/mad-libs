@@ -7,7 +7,9 @@ import * as promptBucket from "./promptBucket.js";
 import * as candidateBucket from "./candidateBucket.js";
 
 function canUseLLM() {
-    if (requestBucket.availableRequestTokens() || candidateBucket.availableCandidateTokens()) return false;
+    if (requestBucket.availableRequestTokens() || 
+        candidateBucket.availableCandidateTokens()
+    ) return false;
 
     requestBucket.addRequestToken();
     return true;
