@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { storyService } from "../services/index.js";
 import { validateStory } from "../utils/validateQuery.js";
+import logger from "../middleware/logger.js";
 
 const router = Router();
 
-router.get('/storyGenerator/:age/:theme', async (request, response) => {
+router.get('/story/:age/:theme', async (request, response) => {
     const params = request.params;
 
     try {
@@ -15,7 +16,7 @@ router.get('/storyGenerator/:age/:theme', async (request, response) => {
             .status(200)
             .json(output);
     } catch (error) {
-        console.error(`\nAPI Error: ${error}\n`);
+        logger.error(error);
         response
             .status(503)
             .json({

@@ -4,42 +4,46 @@
 
 import { createLogger, format, transports } from 'winston';
 
-const logger = createLogger({
-  level: 'info',
-  format: format.combine(
-    format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss'
-    }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json()
-  ),
-  defaultMeta: { service: 'your-service-name' },
-  transports: [
-    //
-    // - Write to all logs with level `info` and below to `quick-start-combined.log`.
-    // - Write all logs error (and below) to `quick-start-error.log`.
-    //
-    new transports.File({ filename: 'quick-start-error.log', level: 'error' }),
-    new transports.File({ filename: 'quick-start-combined.log' })
-  ]
+const schema = format.printf(({ timestamp, level, message, label, ...meta }) => {
+    const msg = typeof message === 'object'
+        ? JSON.stringify(message, null, 4)
+        : message;
+    const lbl = label ? `[${label}] ` : '';
+    return `${timestamp} ${level}: ${lbl}${msg}`;
 });
 
-//
-// If we're not in production then **ALSO** log to the `console`
-// with the colorized simple format.
-//
+const logFormat = format.combine(
+    format.splat(),
+    format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    format.errors({ stack: true }),
+    schema
+)
+
+const files = [
+    new transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new transports.File({ filename: 'logs/combined.log' })
+];
+
+const logger = createLogger({
+    level: 'info',
+    format: logFormat,
+    transports: files
+});
+
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.simple()
-    )
-  }));
+    logger.add(new transports.Console({
+        format: format.combine(
+            format.colorize(),
+            schema
+        )
+    }));
 }
 
-function loh(params) {
-    
+export function apiLogger(req, res, next) {
+	logger.info({
+		message: `${req.method} from ${req.originalUrl}`,
+		label: 'API Request'
+	})
 }
 
 export default logger;

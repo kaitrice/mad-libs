@@ -1,40 +1,41 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { configDotenv } from 'dotenv';
 import routes from "./routes/index.js";
+import logger, { apiLogger } from './middleware/logger.js';
 import { getPath } from './utils/getPath.js';
 import { corsOptions, rateLimit } from './utils/config/index.js';
 
-configDotenv();
 
-const PORT = process.env.PORT || 7170;
-const APP = express();
+const PORT = process.env.PORT || 3030;
+const app = express();
 
+let FILE_PATH;
 const FOLDER_PATH = getPath("../public");
-const FILE_PATH = getPath("../public/html/index.html");
 
-APP.use(cors(corsOptions));
-APP.use(rateLimit);
-APP.use(helmet());
-APP.use(express.json());
-APP.use(express.static(FOLDER_PATH));
+app.use(cors(corsOptions));
+app.use(rateLimit);
+app.use(helmet());
+app.use(express.static(FOLDER_PATH));
 
-APP.get('/', (req, res) => {
-  res.sendFile(FILE_PATH);
+app.get('/', (req, res) => {
+	FILE_PATH = getPath("../public/html/index.html");
+	res.sendFile(FILE_PATH);
 });
 
-APP.use('/api', (req, res, next) => {
-  console.log(`Request recieved: ${req.method} ${req.url}`);
-  next();
+app.get('/documentation', (req, res) => {
+	FILE_PATH = getPath("../public/html/documentation.html");
+	res.sendFile(FILE_PATH);
 });
 
-APP.use('/api', routes);
+app.use('/api', apiLogger, routes);
 
-APP.use((req, res) => {
-  res.status(404).json({ error: "Not found" });
+app.use((req, res) => {
+	res.status(404).json({ error: "Not found" });
 });
 
-APP.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}\n`);
+app.listen(PORT, () => {
+	logger.info({
+		message: `Server is running on port ${PORT}\n`
+	});
 });

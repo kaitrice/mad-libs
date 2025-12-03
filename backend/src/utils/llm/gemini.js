@@ -58,10 +58,8 @@ export default async ({ prompt, settings }) => {
 
         return JSON.parse(text);
     } catch (error) {
-        console.error("Gemini API Error:", error);
         throw error;
     } finally {
         console.timeEnd("Gemini task");
-        // console.log(`Gemini completed task in ${((end - start) / 1000).toFixed(2)} s`);
     }
 }
