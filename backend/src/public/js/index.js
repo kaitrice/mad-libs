@@ -3,11 +3,11 @@ const endpointContainer = document.getElementById('endpoints');
 const endpoints = [
     {
         name: "Generate Themes",
-        url: "/api/themeGeneration"
+        url: "/api/generate/theme"
     },
     {
         name: "Generate Story",
-        url: "/api/storyGeneration"
+        url: "/api/generate/story"
     },
 ]
 
