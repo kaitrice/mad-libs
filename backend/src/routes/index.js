@@ -9,6 +9,6 @@ const routes = [
     themeRoute
 ]
 
-routes.forEach(route => router.use('/', route));
+routes.forEach(route => router.use('/generate', route));
 
 export default router;

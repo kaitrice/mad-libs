@@ -3,7 +3,7 @@ const endpointContainer = document.getElementById('endpoints');
 const endpoints = [
     {
         method: "get",
-        endpoint: "/api/themes",
+        endpoint: "/api/generate/theme",
         description: "Retrieve a list of 6 AI generate short story themes.",
         queryParameters: [
             {
@@ -24,7 +24,7 @@ const endpoints = [
     },
     {
         method: "get",
-        endpoint: "/api/story",
+        endpoint: "/api/generate/story",
         description: "Retrieve an AI generated Mad Libs short story based on a provided theme along with a list of key words that were removed.",
         queryParameters: [
             {
