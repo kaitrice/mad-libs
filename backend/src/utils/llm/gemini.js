@@ -1,23 +1,23 @@
 import { GoogleGenAI } from "@google/genai";
-import { candidateBucket, canUseLLM, promptBucket } from "./buckets/index.js";
+import { candidateBucket, promptBucket, requestBucket } from "./buckets/index.js";
+import logger from "../../middleware/logger.js";
 
 const ai = new GoogleGenAI({});
 
-async function checkTokens(params) {
+async function checkPromptTokens(params) {
     const countTokensResponse = await ai.models.countTokens(params);
     const countPrompt = countTokensResponse.totalTokens;
-    if (!promptBucket.availablePromptTokens(countPrompt)) throw new Error(
-        "No tokens available."
-    );
+    if (!promptBucket.availablePromptTokens(countPrompt)) {
+        requestBucket.removeRequestToken();
+        throw new Error(
+            "No tokens available."
+        );
+    }
 }
 
-function validatePrompt(prompt, settings) {
+function formatArgs(prompt, settings) {
     if (!prompt?.trim()) throw new Error(
         "Prompt cannot be null."
-    );
-
-    if (!canUseLLM) throw new Error(
-        "No requests available."
     );
 
     return {
@@ -48,16 +48,20 @@ function validateResponse(response) {
 
 export default async ({ prompt, settings }) => {
     try {
-        const params = validatePrompt(prompt, settings);
+        const args = formatArgs(prompt, settings);
 
         console.time("Gemini task");
 
-        await checkTokens(params);
-        const response = await ai.models.generateContent(params);
-        const text = validateResponse(response)
+        await checkPromptTokens(args);
+        const response = await ai.models.generateContent(args);
+        const text = validateResponse(response);
 
         return JSON.parse(text);
     } catch (error) {
+        logger.error({
+            error, 
+            label: "Gemini Error"
+        });
         throw error;
     } finally {
         console.timeEnd("Gemini task");
