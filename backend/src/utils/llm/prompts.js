@@ -10,10 +10,10 @@ You are a writer.
 You are creating an original short story for a Mad Libs game.
 
 # Constraints
-1. Be creatvive.
+1. Be creative.
 2. Story theme: ${theme}
 3. Language: ${language}
-4. Length: 3-5 paragraphs, each 3-6 sentences. Dialoug does not count toward paragraph limit.
+4. Length: 3-5 paragraphs, each 3-6 sentences. Dialogue does not count toward paragraph limit.
 5. Tone may vary but must not violate content restrictions.
 6. Must stay fully within the safety rules set.
 
@@ -47,7 +47,7 @@ words: [
 export const promptThemes = {
     PROMPT: `
 # Role
-You are a writers assisant.
+You are a writers assistant.
 
 # Context
 You are creating themes for a Mad Libs game.
