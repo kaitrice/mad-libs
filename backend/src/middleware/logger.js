@@ -3,6 +3,7 @@
  */
 
 import { createLogger, format, transports } from 'winston';
+import { canUseLLM } from '../utils/llm/buckets/index.js';
 
 const schema = format.printf(({ timestamp, level, message, label, ...meta }) => {
     const msg = typeof message === 'object'
@@ -30,6 +31,8 @@ const logger = createLogger({
     transports: files
 });
 
+logger.ster
+
 if (process.env.NODE_ENV !== 'production') {
     logger.add(new transports.Console({
         format: format.combine(
@@ -40,10 +43,21 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export function apiLogger(req, res, next) {
-	logger.info({
-		message: `${req.method} from ${req.originalUrl}`,
-		label: 'API Request'
-	})
+    logger.info({
+        message: `${req.method} from ${req.originalUrl}`,
+        label: 'API Request'
+    })
+
+    if (!canUseLLM) {
+        return res
+            .status(503)
+            .json({
+                status: 503,
+                message: "Experiencing high volumes. Try again later."
+            });
+    }
+
+    next();
 }
 
 export default logger;
