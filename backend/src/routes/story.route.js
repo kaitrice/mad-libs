@@ -1,27 +1,27 @@
 import { Router } from "express";
 import { storyService } from "../services/index.js";
-import { validateStory } from "../utils/validateQuery.js";
+import { storyValidator } from "../utils/validate/index.js";
 import logger from "../middleware/logger.js";
 
 const router = Router();
 
-router.get('/story/:age/:theme', async (request, response) => {
-    const params = request.params;
+router.get('/story', async (request, response) => {
+    const query = request.query;
 
     try {
-        validateStory(params);
+        const validated = storyValidator(query);
         
-        const output = await storyService({ theme: params.theme, age: params.age });
+        const output = await storyService(validated.theme, validated.age);
         response
             .status(200)
             .json(output);
     } catch (error) {
         logger.error(error);
         response
-            .status(503)
+            .status(400)
             .json({
-                status: 503,
-                message: "Experiencing high volumes. Try again later."
+                status: 400,
+                message: "Error. Bad request."
             });
     }
 });
